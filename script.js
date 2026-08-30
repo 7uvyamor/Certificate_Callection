@@ -1,241 +1,178 @@
+
 // ==========================================
-// LOGIN ACCOUNT
+// CERTIFICATE WEBSITE - SCRIPT.JS
 // ==========================================
 
 const LOGIN_USERNAME = "love";
-
 const LOGIN_PASSWORD = "loveyoueveryday";
 
+const $ = (id) => document.getElementById(id);
 
-// ==========================================
-// ELEMENTS
-// ==========================================
+// ---------- Navbar ----------
+const loginNavBtn = $("loginNavBtn");
+const userArea = $("userArea");
+const userBtn = $("userBtn");
+const userMenu = $("userMenu");
+const menuUsername = $("menuUsername");
+const logoutBtn = $("logoutBtn");
 
-// Navigation
+// ---------- Login ----------
+const loginModal = $("loginModal");
+const closeLoginModal = $("closeLoginModal");
+const loginForm = $("loginForm");
+const loginError = $("loginError");
+const usernameInput = $("username");
+const passwordInput = $("password");
 
-const loginNavBtn =
-    document.getElementById(
-        "loginNavBtn"
-    );
+// ---------- Loading ----------
+const loadingPage = $("loadingPage");
 
-const userArea =
-    document.getElementById(
-        "userArea"
-    );
+// ---------- Certificate ----------
+const certificateGrid = $("certificateGrid");
+const detailModal = $("detailModal");
+const closeModal = $("closeModal");
+const detailImage = $("detailImage");
+const detailTitle = $("detailTitle");
+const deleteBtn = $("deleteBtn");
 
-const userBtn =
-    document.getElementById(
-        "userBtn"
-    );
-
-const userMenu =
-    document.getElementById(
-        "userMenu"
-    );
-
-const menuUsername =
-    document.getElementById(
-        "menuUsername"
-    );
-
-const logoutBtn =
-    document.getElementById(
-        "logoutBtn"
-    );
-
-
-// Login
-
-const loginModal =
-    document.getElementById(
-        "loginModal"
-    );
-
-const closeLoginModal =
-    document.getElementById(
-        "closeLoginModal"
-    );
-
-const loginForm =
-    document.getElementById(
-        "loginForm"
-    );
-
-const loginError =
-    document.getElementById(
-        "loginError"
-    );
-
-
-// Loading
-
-const loadingPage =
-    document.getElementById(
-        "loadingPage"
-    );
-
-
-// Certificate
-
-const certificateGrid =
-    document.getElementById(
-        "certificateGrid"
-    );
-
-const detailModal =
-    document.getElementById(
-        "detailModal"
-    );
-
-const closeModal =
-    document.getElementById(
-        "closeModal"
-    );
-
-const detailImage =
-    document.getElementById(
-        "detailImage"
-    );
-
-const detailTitle =
-    document.getElementById(
-        "detailTitle"
-    );
-
-const deleteBtn =
-    document.getElementById(
-        "deleteBtn"
-    );
-
-
-// Add page
-
-const addPage =
-    document.getElementById(
-        "addPage"
-    );
-
-const backBtn =
-    document.getElementById(
-        "backBtn"
-    );
-
-const certificateForm =
-    document.getElementById(
-        "certificateForm"
-    );
-
-const certificateImage =
-    document.getElementById(
-        "certificateImage"
-    );
-
-const certificateTitle =
-    document.getElementById(
-        "certificateTitle"
-    );
-
-const imagePreview =
-    document.getElementById(
-        "imagePreview"
-    );
-
-const uploadText =
-    document.getElementById(
-        "uploadText"
-    );
+// ---------- Add Certificate ----------
+const addPage = $("addPage");
+const backBtn = $("backBtn");
+const certificateForm = $("certificateForm");
+const certificateImage = $("certificateImage");
+const certificateTitle = $("certificateTitle");
+const imagePreview = $("imagePreview");
+const uploadText = $("uploadText");
 
 
 // ==========================================
-// STORAGE
+// STATE
 // ==========================================
 
-const STORAGE_KEY =
-    "myCertificates";
+let certificates = [];
+let selectedCertificateIndex = null;
+let isLoggedIn = sessionStorage.getItem("isLoggedIn") === "true";
+let currentUser = sessionStorage.getItem("currentUser") || "";
 
-
-// ==========================================
-// CERTIFICATE DATA
-// ==========================================
-
-let certificates =
-    JSON.parse(
-        localStorage.getItem(
-            STORAGE_KEY
-        )
-    ) || [];
-
-
-let selectedCertificateIndex =
-    null;
+const STORAGE_KEY = "myCertificates";
 
 
 // ==========================================
-// LOGIN STATE
+// LOAD DATA
 // ==========================================
 
-let isLoggedIn =
-    sessionStorage.getItem(
-        "isLoggedIn"
-    ) === "true";
+function loadCertificates() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(STORAGE_KEY);
+
+        if (!saved) {
+            return [];
+        }
+
+        const data =
+            JSON.parse(saved);
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Cannot load certificates:",
+            error
+        );
+
+        return [];
+    }
+}
 
 
-let currentUser =
-    sessionStorage.getItem(
-        "currentUser"
-    ) || "";
+function saveCertificates() {
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(certificates)
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(
+            "Cannot save certificates:",
+            error
+        );
+
+        alert(
+            "ไม่สามารถบันทึกข้อมูลได้"
+        );
+
+        return false;
+    }
+}
+
+
+certificates = loadCertificates();
 
 
 // ==========================================
-// UPDATE NAVBAR
+// SMALL HELPERS
+// ==========================================
+
+function wait(ms) {
+
+    return new Promise(resolve => {
+        setTimeout(resolve, ms);
+    });
+
+}
+
+
+function lockScroll() {
+
+    document.body.style.overflow = "hidden";
+
+}
+
+
+function unlockScroll() {
+
+    document.body.style.overflow = "";
+
+}
+
+
+// ==========================================
+// NAVBAR
 // ==========================================
 
 function updateNavbar() {
 
     if (isLoggedIn) {
 
-        // ซ่อน Login
+        loginNavBtn.style.display = "none";
 
-        loginNavBtn.style.display =
-            "none";
-
-
-        // แสดง User
-
-        userArea.classList.add(
-            "active"
-        );
-
-
-        // แสดงชื่อ
+        userArea.classList.add("active");
 
         userBtn.textContent =
             currentUser;
 
-
         menuUsername.textContent =
             currentUser;
 
-    }
+    } else {
 
-    else {
+        loginNavBtn.style.display = "";
 
-        // แสดง Login
+        userArea.classList.remove("active");
 
-        loginNavBtn.style.display =
-            "block";
-
-
-        // ซ่อน User
-
-        userArea.classList.remove(
-            "active"
-        );
-
-
-        userMenu.classList.remove(
-            "active"
-        );
+        userMenu.classList.remove("active");
 
     }
 
@@ -243,89 +180,64 @@ function updateNavbar() {
 
 
 // ==========================================
-// OPEN LOGIN
+// LOGIN
 // ==========================================
 
 function openLogin() {
 
-    loginModal.classList.add(
-        "active"
-    );
-
-
     loginError.textContent = "";
 
+    usernameInput.value = "";
+    passwordInput.value = "";
 
-    document.getElementById(
-        "username"
-    ).value = "";
+    loginModal.classList.remove("closing");
 
+    loginModal.classList.add("active");
 
-    document.getElementById(
-        "password"
-    ).value = "";
+    lockScroll();
 
+    setTimeout(() => {
 
-    setTimeout(
-        function () {
+        usernameInput.focus();
 
-            document.getElementById(
-                "username"
-            ).focus();
-
-        },
-        100
-    );
+    }, 350);
 
 }
 
-
-// ==========================================
-// CLOSE LOGIN
-// ==========================================
 
 function closeLogin() {
 
-    loginModal.classList.remove(
-        "active"
-    );
+    loginModal.classList.add("closing");
+
+    setTimeout(() => {
+
+        loginModal.classList.remove(
+            "active",
+            "closing"
+        );
+
+        unlockScroll();
+
+    }, 350);
 
 }
 
 
-// ==========================================
-// NAV LOGIN BUTTON
-// ==========================================
-
 loginNavBtn.addEventListener(
     "click",
-    function () {
-
-        openLogin();
-
-    }
+    openLogin
 );
 
-
-// ==========================================
-// CLOSE LOGIN
-// ==========================================
 
 closeLoginModal.addEventListener(
     "click",
-    function () {
-
-        closeLogin();
-
-    }
+    closeLogin
 );
 
 
-// คลิกด้านนอก Login
-
 loginModal.addEventListener(
     "click",
-    function (event) {
+    event => {
 
         if (
             event.target === loginModal
@@ -340,103 +252,97 @@ loginModal.addEventListener(
 
 
 // ==========================================
-// LOGIN
+// LOGIN SUBMIT
 // ==========================================
 
 loginForm.addEventListener(
     "submit",
-    function (event) {
+    async event => {
 
         event.preventDefault();
 
-
         const username =
-            document.getElementById(
-                "username"
-            ).value.trim();
-
+            usernameInput.value.trim();
 
         const password =
-            document.getElementById(
-                "password"
-            ).value;
-
-
-        // ตรวจสอบ
+            passwordInput.value;
 
         if (
-            username === LOGIN_USERNAME &&
-            password === LOGIN_PASSWORD
+            username !== LOGIN_USERNAME ||
+            password !== LOGIN_PASSWORD
         ) {
-
-            isLoggedIn = true;
-
-            currentUser =
-                username;
-
-
-            sessionStorage.setItem(
-                "isLoggedIn",
-                "true"
-            );
-
-
-            sessionStorage.setItem(
-                "currentUser",
-                username
-            );
-
-
-            // ปิด Login
-
-            closeLogin();
-
-
-            // แสดง Loading
-
-            loadingPage.classList.add(
-                "active"
-            );
-
-
-            // รอ 1.2 วินาที
-
-            setTimeout(
-                function () {
-
-                    loadingPage.classList.remove(
-                        "active"
-                    );
-
-
-                    updateNavbar();
-
-
-                    // ถ้ามาจากการกดลบ
-                    // จะกลับไป Certificate เดิม
-
-                    if (
-                        selectedCertificateIndex !== null
-                    ) {
-
-                        openDetail(
-                            selectedCertificateIndex
-                        );
-
-                    }
-
-                },
-                1200
-            );
-
-        }
-
-        else {
 
             loginError.textContent =
                 "Username หรือ Password ไม่ถูกต้อง";
 
+            loginForm.classList.remove(
+                "login-shake"
+            );
+
+            void loginForm.offsetWidth;
+
+            loginForm.classList.add(
+                "login-shake"
+            );
+
+            return;
         }
+
+
+        // Login สำเร็จ
+
+        isLoggedIn = true;
+        currentUser = username;
+
+        sessionStorage.setItem(
+            "isLoggedIn",
+            "true"
+        );
+
+        sessionStorage.setItem(
+            "currentUser",
+            username
+        );
+
+
+        closeLogin();
+
+        await wait(350);
+
+
+        // Loading
+
+        loadingPage.classList.remove(
+            "closing"
+        );
+
+        loadingPage.classList.add(
+            "active"
+        );
+
+        lockScroll();
+
+
+        await wait(900);
+
+
+        loadingPage.classList.add(
+            "closing"
+        );
+
+
+        await wait(350);
+
+
+        loadingPage.classList.remove(
+            "active",
+            "closing"
+        );
+
+
+        updateNavbar();
+
+        unlockScroll();
 
     }
 );
@@ -448,10 +354,9 @@ loginForm.addEventListener(
 
 userBtn.addEventListener(
     "click",
-    function (event) {
+    event => {
 
         event.stopPropagation();
-
 
         userMenu.classList.toggle(
             "active"
@@ -461,16 +366,12 @@ userBtn.addEventListener(
 );
 
 
-// คลิกพื้นที่อื่น
-
 document.addEventListener(
     "click",
-    function (event) {
+    event => {
 
         if (
-            !userMenu.contains(
-                event.target
-            ) &&
+            !userMenu.contains(event.target) &&
             event.target !== userBtn
         ) {
 
@@ -490,27 +391,22 @@ document.addEventListener(
 
 logoutBtn.addEventListener(
     "click",
-    function () {
+    () => {
 
         isLoggedIn = false;
-
         currentUser = "";
-
 
         sessionStorage.removeItem(
             "isLoggedIn"
         );
 
-
         sessionStorage.removeItem(
             "currentUser"
         );
 
-
         userMenu.classList.remove(
             "active"
         );
-
 
         updateNavbar();
 
@@ -528,16 +424,10 @@ function displayCertificates() {
 
 
     certificates.forEach(
-        function (
-            certificate,
-            index
-        ) {
+        (certificate, index) => {
 
             const card =
-                document.createElement(
-                    "div"
-                );
-
+                document.createElement("div");
 
             card.className =
                 "certificate-card";
@@ -547,15 +437,13 @@ function displayCertificates() {
 
                 <img
                     src="${certificate.image}"
-                    alt="Certificate"
+                    alt="${certificate.title}"
                 >
 
                 <div class="card-info">
 
                     <h3>
-                        ${escapeHTML(
-                            certificate.title
-                        )}
+                        ${certificate.title}
                     </h3>
 
                 </div>
@@ -565,7 +453,7 @@ function displayCertificates() {
 
             card.addEventListener(
                 "click",
-                function () {
+                () => {
 
                     openDetail(index);
 
@@ -581,15 +469,10 @@ function displayCertificates() {
     );
 
 
-    // ======================================
-    // ADD CARD
-    // ======================================
+    // Add Certificate
 
     const addCard =
-        document.createElement(
-            "div"
-        );
-
+        document.createElement("div");
 
     addCard.className =
         "add-card";
@@ -610,10 +493,7 @@ function displayCertificates() {
 
     addCard.addEventListener(
         "click",
-        function () {
-
-            // การเพิ่มก็ให้เฉพาะ
-            // คนที่ Login แล้ว
+        () => {
 
             if (!isLoggedIn) {
 
@@ -622,7 +502,6 @@ function displayCertificates() {
                 return;
 
             }
-
 
             openAddPage();
 
@@ -638,7 +517,7 @@ function displayCertificates() {
 
 
 // ==========================================
-// OPEN DETAIL
+// DETAIL MODAL
 // ==========================================
 
 function openDetail(index) {
@@ -646,11 +525,8 @@ function openDetail(index) {
     const certificate =
         certificates[index];
 
-
     if (!certificate) {
-
         return;
-
     }
 
 
@@ -661,39 +537,45 @@ function openDetail(index) {
     detailImage.src =
         certificate.image;
 
-
     detailTitle.textContent =
         certificate.title;
 
+
+    detailModal.classList.remove(
+        "closing"
+    );
 
     detailModal.classList.add(
         "active"
     );
 
-
-    document.body.style.overflow =
-        "hidden";
+    lockScroll();
 
 }
 
 
-// ==========================================
-// CLOSE DETAIL
-// ==========================================
-
 function closeDetail() {
 
-    detailModal.classList.remove(
-        "active"
+    detailModal.classList.add(
+        "closing"
     );
 
 
-    document.body.style.overflow =
-        "";
+    setTimeout(() => {
 
+        detailModal.classList.remove(
+            "active",
+            "closing"
+        );
 
-    selectedCertificateIndex =
-        null;
+        detailImage.src = "";
+
+        selectedCertificateIndex =
+            null;
+
+        unlockScroll();
+
+    }, 350);
 
 }
 
@@ -704,11 +586,9 @@ closeModal.addEventListener(
 );
 
 
-// คลิกด้านนอก
-
 detailModal.addEventListener(
     "click",
-    function (event) {
+    event => {
 
         if (
             event.target === detailModal
@@ -723,22 +603,14 @@ detailModal.addEventListener(
 
 
 // ==========================================
-// DELETE CERTIFICATE
+// DELETE
 // ==========================================
 
 deleteBtn.addEventListener(
     "click",
-    function () {
-
-        // ==============================
-        // ถ้ายังไม่ Login
-        // ==============================
+    async () => {
 
         if (!isLoggedIn) {
-
-            // เปิด Login
-            // โดยยังจำ Certificate
-            // ที่ต้องการลบไว้
 
             openLogin();
 
@@ -746,10 +618,6 @@ deleteBtn.addEventListener(
 
         }
 
-
-        // ==============================
-        // Login แล้ว
-        // ==============================
 
         if (
             selectedCertificateIndex === null
@@ -767,49 +635,59 @@ deleteBtn.addEventListener(
 
 
         if (!certificate) {
-
             return;
-
         }
 
 
-        const confirmDelete =
+        const confirmed =
             confirm(
                 `ต้องการลบ "${certificate.title}" หรือไม่?`
             );
 
 
-        if (!confirmDelete) {
-
+        if (!confirmed) {
             return;
+        }
+
+
+        const index =
+            selectedCertificateIndex;
+
+
+        const cards =
+            certificateGrid.querySelectorAll(
+                ".certificate-card"
+            );
+
+
+        if (cards[index]) {
+
+            cards[index].style.opacity =
+                "0";
+
+            cards[index].style.transform =
+                "scale(.94) translateY(10px)";
 
         }
 
 
-        // ลบ
+        await wait(300);
+
 
         certificates.splice(
-            selectedCertificateIndex,
+            index,
             1
         );
 
 
-        // บันทึก
+        if (!saveCertificates()) {
+            return;
+        }
 
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(
-                certificates
-            )
-        );
-
-
-        // ปิด Popup
 
         closeDetail();
 
-
-        // แสดงใหม่
+        await wait(350);
 
         displayCertificates();
 
@@ -818,7 +696,7 @@ deleteBtn.addEventListener(
 
 
 // ==========================================
-// OPEN ADD PAGE
+// ADD CERTIFICATE PAGE
 // ==========================================
 
 function openAddPage() {
@@ -832,48 +710,52 @@ function openAddPage() {
     }
 
 
+    userMenu.classList.remove(
+        "active"
+    );
+
+
+    addPage.classList.remove(
+        "closing"
+    );
+
+
     addPage.classList.add(
         "active"
     );
 
 
-    window.scrollTo(
-        0,
-        0
-    );
+    lockScroll();
+
+
+    setTimeout(() => {
+
+        addPage.scrollTop = 0;
+
+    }, 50);
 
 }
 
 
-// ==========================================
-// CLOSE ADD PAGE
-// ==========================================
-
 function closeAddPage() {
 
-    addPage.classList.remove(
-        "active"
+    addPage.classList.add(
+        "closing"
     );
 
 
-    certificateForm.reset();
+    setTimeout(() => {
 
+        addPage.classList.remove(
+            "active",
+            "closing"
+        );
 
-    imagePreview.src = "";
+        unlockScroll();
 
+        resetForm();
 
-    imagePreview.style.display =
-        "none";
-
-
-    uploadText.style.display =
-        "flex";
-
-
-    window.scrollTo(
-        0,
-        0
-    );
+    }, 400);
 
 }
 
@@ -885,25 +767,39 @@ backBtn.addEventListener(
 
 
 // ==========================================
+// RESET FORM
+// ==========================================
+
+function resetForm() {
+
+    certificateForm.reset();
+
+    imagePreview.src = "";
+
+    imagePreview.style.display =
+        "none";
+
+    uploadText.style.display =
+        "flex";
+
+}
+
+
+// ==========================================
 // IMAGE PREVIEW
 // ==========================================
 
 certificateImage.addEventListener(
     "change",
-    function () {
+    event => {
 
         const file =
-            this.files[0];
-
+            event.target.files[0];
 
         if (!file) {
-
             return;
-
         }
 
-
-        // ตรวจว่าเป็นรูป
 
         if (
             !file.type.startsWith(
@@ -915,11 +811,10 @@ certificateImage.addEventListener(
                 "กรุณาเลือกไฟล์รูปภาพ"
             );
 
-
-            this.value = "";
+            certificateImage.value =
+                "";
 
             return;
-
         }
 
 
@@ -928,15 +823,13 @@ certificateImage.addEventListener(
 
 
         reader.onload =
-            function (event) {
+            event => {
 
                 imagePreview.src =
                     event.target.result;
 
-
                 imagePreview.style.display =
                     "block";
-
 
                 uploadText.style.display =
                     "none";
@@ -953,17 +846,15 @@ certificateImage.addEventListener(
 
 
 // ==========================================
-// SAVE CERTIFICATE
+// SAVE NEW CERTIFICATE
 // ==========================================
 
 certificateForm.addEventListener(
     "submit",
-    function (event) {
+    event => {
 
         event.preventDefault();
 
-
-        // ต้อง Login
 
         if (!isLoggedIn) {
 
@@ -976,7 +867,6 @@ certificateForm.addEventListener(
 
         const title =
             certificateTitle.value.trim();
-
 
         const file =
             certificateImage.files[0];
@@ -999,6 +889,8 @@ certificateForm.addEventListener(
                 "กรุณาใส่ชื่อ Certificate"
             );
 
+            certificateTitle.focus();
+
             return;
 
         }
@@ -1009,44 +901,35 @@ certificateForm.addEventListener(
 
 
         reader.onload =
-            function (event) {
+            event => {
 
-                const newCertificate = {
+                certificates.push({
 
-                    id:
-                        Date.now(),
+                    id: Date.now(),
 
-                    title:
-                        title,
+                    title: title,
 
                     image:
                         event.target.result
 
-                };
+                });
 
 
-                certificates.push(
-                    newCertificate
-                );
+                if (
+                    !saveCertificates()
+                ) {
 
+                    certificates.pop();
 
-                localStorage.setItem(
-                    STORAGE_KEY,
-                    JSON.stringify(
-                        certificates
-                    )
-                );
+                    return;
+
+                }
 
 
                 displayCertificates();
 
 
                 closeAddPage();
-
-
-                alert(
-                    "เพิ่ม Certificate เรียบร้อยแล้ว!"
-                );
 
             };
 
@@ -1060,24 +943,73 @@ certificateForm.addEventListener(
 
 
 // ==========================================
-// ESCAPE HTML
+// ESC KEY
 // ==========================================
 
-function escapeHTML(text) {
+document.addEventListener(
+    "keydown",
+    event => {
 
-    const div =
-        document.createElement(
-            "div"
-        );
+        if (
+            event.key !== "Escape"
+        ) {
+            return;
+        }
 
 
-    div.textContent =
-        text;
+        if (
+            userMenu.classList.contains(
+                "active"
+            )
+        ) {
+
+            userMenu.classList.remove(
+                "active"
+            );
+
+            return;
+
+        }
 
 
-    return div.innerHTML;
+        if (
+            detailModal.classList.contains(
+                "active"
+            )
+        ) {
 
-}
+            closeDetail();
+
+            return;
+
+        }
+
+
+        if (
+            loginModal.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeLogin();
+
+            return;
+
+        }
+
+
+        if (
+            addPage.classList.contains(
+                "active"
+            )
+        ) {
+
+            closeAddPage();
+
+        }
+
+    }
+);
 
 
 // ==========================================
@@ -1086,4 +1018,6 @@ function escapeHTML(text) {
 
 updateNavbar();
 
-displayCertificates();  
+displayCertificates();
+
+unlockScroll();
