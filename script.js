@@ -1,4 +1,3 @@
-
 // ==========================================
 // CERTIFICATE WEBSITE - SCRIPT.JS
 // ==========================================
@@ -44,7 +43,6 @@ const certificateTitle = $("certificateTitle");
 const imagePreview = $("imagePreview");
 const uploadText = $("uploadText");
 
-
 // ==========================================
 // STATE
 // ==========================================
@@ -56,384 +54,228 @@ let currentUser = sessionStorage.getItem("currentUser") || "";
 
 const STORAGE_KEY = "myCertificates";
 
-
 // ==========================================
 // LOAD DATA
 // ==========================================
 
 function loadCertificates() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
 
-    try {
-
-        const saved =
-            localStorage.getItem(STORAGE_KEY);
-
-        if (!saved) {
-            return [];
-        }
-
-        const data =
-            JSON.parse(saved);
-
-        return Array.isArray(data)
-            ? data
-            : [];
-
-    } catch (error) {
-
-        console.error(
-            "Cannot load certificates:",
-            error
-        );
-
-        return [];
+    if (!saved) {
+      return [];
     }
-}
 
+    const data = JSON.parse(saved);
+
+    return Array.isArray(data) ? data : [];
+  } catch (error) {
+    console.error("Cannot load certificates:", error);
+
+    return [];
+  }
+}
 
 function saveCertificates() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
 
-    try {
+    return true;
+  } catch (error) {
+    console.error("Cannot save certificates:", error);
 
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(certificates)
-        );
+    alert("ไม่สามารถบันทึกข้อมูลได้");
 
-        return true;
-
-    } catch (error) {
-
-        console.error(
-            "Cannot save certificates:",
-            error
-        );
-
-        alert(
-            "ไม่สามารถบันทึกข้อมูลได้"
-        );
-
-        return false;
-    }
+    return false;
+  }
 }
 
-
 certificates = loadCertificates();
-
 
 // ==========================================
 // SMALL HELPERS
 // ==========================================
 
 function wait(ms) {
-
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
-
 
 function lockScroll() {
-
-    document.body.style.overflow = "hidden";
-
+  document.body.style.overflow = "hidden";
 }
-
 
 function unlockScroll() {
-
-    document.body.style.overflow = "";
-
+  document.body.style.overflow = "";
 }
-
 
 // ==========================================
 // NAVBAR
 // ==========================================
 
 function updateNavbar() {
+  if (isLoggedIn) {
+    loginNavBtn.style.display = "none";
 
-    if (isLoggedIn) {
+    userArea.classList.add("active");
 
-        loginNavBtn.style.display = "none";
+    userBtn.textContent = currentUser;
 
-        userArea.classList.add("active");
+    menuUsername.textContent = currentUser;
+  } else {
+    loginNavBtn.style.display = "";
 
-        userBtn.textContent =
-            currentUser;
+    userArea.classList.remove("active");
 
-        menuUsername.textContent =
-            currentUser;
-
-    } else {
-
-        loginNavBtn.style.display = "";
-
-        userArea.classList.remove("active");
-
-        userMenu.classList.remove("active");
-
-    }
-
+    userMenu.classList.remove("active");
+  }
 }
-
 
 // ==========================================
 // LOGIN
 // ==========================================
 
 function openLogin() {
+  loginError.textContent = "";
 
-    loginError.textContent = "";
+  usernameInput.value = "";
+  passwordInput.value = "";
 
-    usernameInput.value = "";
-    passwordInput.value = "";
+  loginModal.classList.remove("closing");
 
-    loginModal.classList.remove("closing");
+  loginModal.classList.add("active");
 
-    loginModal.classList.add("active");
+  lockScroll();
 
-    lockScroll();
-
-    setTimeout(() => {
-
-        usernameInput.focus();
-
-    }, 350);
-
+  setTimeout(() => {
+    usernameInput.focus();
+  }, 350);
 }
-
 
 function closeLogin() {
+  loginModal.classList.add("closing");
 
-    loginModal.classList.add("closing");
+  setTimeout(() => {
+    loginModal.classList.remove("active", "closing");
 
-    setTimeout(() => {
-
-        loginModal.classList.remove(
-            "active",
-            "closing"
-        );
-
-        unlockScroll();
-
-    }, 350);
-
+    unlockScroll();
+  }, 350);
 }
 
+loginNavBtn.addEventListener("click", openLogin);
 
-loginNavBtn.addEventListener(
-    "click",
-    openLogin
-);
+closeLoginModal.addEventListener("click", closeLogin);
 
-
-closeLoginModal.addEventListener(
-    "click",
-    closeLogin
-);
-
-
-loginModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target === loginModal
-        ) {
-
-            closeLogin();
-
-        }
-
-    }
-);
-
+loginModal.addEventListener("click", (event) => {
+  if (event.target === loginModal) {
+    closeLogin();
+  }
+});
 
 // ==========================================
 // LOGIN SUBMIT
 // ==========================================
 
-loginForm.addEventListener(
-    "submit",
-    async event => {
+loginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
 
-        event.preventDefault();
+  const username = usernameInput.value.trim();
 
-        const username =
-            usernameInput.value.trim();
+  const password = passwordInput.value;
 
-        const password =
-            passwordInput.value;
+  if (username !== LOGIN_USERNAME || password !== LOGIN_PASSWORD) {
+    loginError.textContent = "Username หรือ Password ไม่ถูกต้อง";
 
-        if (
-            username !== LOGIN_USERNAME ||
-            password !== LOGIN_PASSWORD
-        ) {
+    loginForm.classList.remove("login-shake");
 
-            loginError.textContent =
-                "Username หรือ Password ไม่ถูกต้อง";
+    void loginForm.offsetWidth;
 
-            loginForm.classList.remove(
-                "login-shake"
-            );
+    loginForm.classList.add("login-shake");
 
-            void loginForm.offsetWidth;
+    return;
+  }
 
-            loginForm.classList.add(
-                "login-shake"
-            );
+  // Login สำเร็จ
 
-            return;
-        }
+  isLoggedIn = true;
+  currentUser = username;
 
+  sessionStorage.setItem("isLoggedIn", "true");
 
-        // Login สำเร็จ
+  sessionStorage.setItem("currentUser", username);
 
-        isLoggedIn = true;
-        currentUser = username;
+  closeLogin();
 
-        sessionStorage.setItem(
-            "isLoggedIn",
-            "true"
-        );
+  await wait(350);
 
-        sessionStorage.setItem(
-            "currentUser",
-            username
-        );
+  // Loading
 
+  loadingPage.classList.remove("closing");
 
-        closeLogin();
+  loadingPage.classList.add("active");
 
-        await wait(350);
+  lockScroll();
 
+  await wait(900);
 
-        // Loading
+  loadingPage.classList.add("closing");
 
-        loadingPage.classList.remove(
-            "closing"
-        );
+  await wait(350);
 
-        loadingPage.classList.add(
-            "active"
-        );
+  loadingPage.classList.remove("active", "closing");
 
-        lockScroll();
+  updateNavbar();
 
-
-        await wait(900);
-
-
-        loadingPage.classList.add(
-            "closing"
-        );
-
-
-        await wait(350);
-
-
-        loadingPage.classList.remove(
-            "active",
-            "closing"
-        );
-
-
-        updateNavbar();
-
-        unlockScroll();
-
-    }
-);
-
+  unlockScroll();
+});
 
 // ==========================================
 // USER MENU
 // ==========================================
 
-userBtn.addEventListener(
-    "click",
-    event => {
+userBtn.addEventListener("click", (event) => {
+  event.stopPropagation();
 
-        event.stopPropagation();
+  userMenu.classList.toggle("active");
+});
 
-        userMenu.classList.toggle(
-            "active"
-        );
-
-    }
-);
-
-
-document.addEventListener(
-    "click",
-    event => {
-
-        if (
-            !userMenu.contains(event.target) &&
-            event.target !== userBtn
-        ) {
-
-            userMenu.classList.remove(
-                "active"
-            );
-
-        }
-
-    }
-);
-
+document.addEventListener("click", (event) => {
+  if (!userMenu.contains(event.target) && event.target !== userBtn) {
+    userMenu.classList.remove("active");
+  }
+});
 
 // ==========================================
 // LOGOUT
 // ==========================================
 
-logoutBtn.addEventListener(
-    "click",
-    () => {
+logoutBtn.addEventListener("click", () => {
+  isLoggedIn = false;
+  currentUser = "";
 
-        isLoggedIn = false;
-        currentUser = "";
+  sessionStorage.removeItem("isLoggedIn");
 
-        sessionStorage.removeItem(
-            "isLoggedIn"
-        );
+  sessionStorage.removeItem("currentUser");
 
-        sessionStorage.removeItem(
-            "currentUser"
-        );
+  userMenu.classList.remove("active");
 
-        userMenu.classList.remove(
-            "active"
-        );
-
-        updateNavbar();
-
-    }
-);
-
+  updateNavbar();
+});
 
 // ==========================================
 // DISPLAY CERTIFICATES
 // ==========================================
 
 function displayCertificates() {
+  certificateGrid.innerHTML = "";
 
-    certificateGrid.innerHTML = "";
+  certificates.forEach((certificate, index) => {
+    const card = document.createElement("div");
 
+    card.className = "certificate-card";
 
-    certificates.forEach(
-        (certificate, index) => {
-
-            const card =
-                document.createElement("div");
-
-            card.className =
-                "certificate-card";
-
-
-            card.innerHTML = `
+    card.innerHTML = `
 
                 <img
                     src="${certificate.image}"
@@ -450,35 +292,20 @@ function displayCertificates() {
 
             `;
 
+    card.addEventListener("click", () => {
+      openDetail(index);
+    });
 
-            card.addEventListener(
-                "click",
-                () => {
+    certificateGrid.appendChild(card);
+  });
 
-                    openDetail(index);
+  // Add Certificate
 
-                }
-            );
+  const addCard = document.createElement("div");
 
+  addCard.className = "add-card";
 
-            certificateGrid.appendChild(
-                card
-            );
-
-        }
-    );
-
-
-    // Add Certificate
-
-    const addCard =
-        document.createElement("div");
-
-    addCard.className =
-        "add-card";
-
-
-    addCard.innerHTML = `
+  addCard.innerHTML = `
 
         <div class="plus">
             ＋
@@ -490,527 +317,288 @@ function displayCertificates() {
 
     `;
 
+  addCard.addEventListener("click", () => {
+    if (!isLoggedIn) {
+      openLogin();
 
-    addCard.addEventListener(
-        "click",
-        () => {
+      return;
+    }
 
-            if (!isLoggedIn) {
+    openAddPage();
+  });
 
-                openLogin();
-
-                return;
-
-            }
-
-            openAddPage();
-
-        }
-    );
-
-
-    certificateGrid.appendChild(
-        addCard
-    );
-
+  certificateGrid.appendChild(addCard);
 }
-
 
 // ==========================================
 // DETAIL MODAL
 // ==========================================
 
 function openDetail(index) {
+  const certificate = certificates[index];
 
-    const certificate =
-        certificates[index];
+  if (!certificate) {
+    return;
+  }
 
-    if (!certificate) {
-        return;
-    }
+  selectedCertificateIndex = index;
 
+  detailImage.src = certificate.image;
 
-    selectedCertificateIndex =
-        index;
+  detailTitle.textContent = certificate.title;
 
+  detailModal.classList.remove("closing");
 
-    detailImage.src =
-        certificate.image;
+  detailModal.classList.add("active");
 
-    detailTitle.textContent =
-        certificate.title;
-
-
-    detailModal.classList.remove(
-        "closing"
-    );
-
-    detailModal.classList.add(
-        "active"
-    );
-
-    lockScroll();
-
+  lockScroll();
 }
-
 
 function closeDetail() {
+  detailModal.classList.add("closing");
 
-    detailModal.classList.add(
-        "closing"
-    );
+  setTimeout(() => {
+    detailModal.classList.remove("active", "closing");
 
+    detailImage.src = "";
 
-    setTimeout(() => {
+    selectedCertificateIndex = null;
 
-        detailModal.classList.remove(
-            "active",
-            "closing"
-        );
-
-        detailImage.src = "";
-
-        selectedCertificateIndex =
-            null;
-
-        unlockScroll();
-
-    }, 350);
-
+    unlockScroll();
+  }, 350);
 }
 
+closeModal.addEventListener("click", closeDetail);
 
-closeModal.addEventListener(
-    "click",
-    closeDetail
-);
-
-
-detailModal.addEventListener(
-    "click",
-    event => {
-
-        if (
-            event.target === detailModal
-        ) {
-
-            closeDetail();
-
-        }
-
-    }
-);
-
+detailModal.addEventListener("click", (event) => {
+  if (event.target === detailModal) {
+    closeDetail();
+  }
+});
 
 // ==========================================
 // DELETE
 // ==========================================
 
-deleteBtn.addEventListener(
-    "click",
-    async () => {
+deleteBtn.addEventListener("click", async () => {
+  if (!isLoggedIn) {
+    openLogin();
 
-        if (!isLoggedIn) {
+    return;
+  }
 
-            openLogin();
+  if (selectedCertificateIndex === null) {
+    return;
+  }
 
-            return;
+  const certificate = certificates[selectedCertificateIndex];
 
-        }
+  if (!certificate) {
+    return;
+  }
 
+  const confirmed = confirm(`ต้องการลบ "${certificate.title}" หรือไม่?`);
 
-        if (
-            selectedCertificateIndex === null
-        ) {
+  if (!confirmed) {
+    return;
+  }
 
-            return;
+  const index = selectedCertificateIndex;
 
-        }
+  const cards = certificateGrid.querySelectorAll(".certificate-card");
 
+  if (cards[index]) {
+    cards[index].style.opacity = "0";
 
-        const certificate =
-            certificates[
-                selectedCertificateIndex
-            ];
+    cards[index].style.transform = "scale(.94) translateY(10px)";
+  }
 
+  await wait(300);
 
-        if (!certificate) {
-            return;
-        }
+  certificates.splice(index, 1);
 
+  if (!saveCertificates()) {
+    return;
+  }
 
-        const confirmed =
-            confirm(
-                `ต้องการลบ "${certificate.title}" หรือไม่?`
-            );
+  closeDetail();
 
+  await wait(350);
 
-        if (!confirmed) {
-            return;
-        }
-
-
-        const index =
-            selectedCertificateIndex;
-
-
-        const cards =
-            certificateGrid.querySelectorAll(
-                ".certificate-card"
-            );
-
-
-        if (cards[index]) {
-
-            cards[index].style.opacity =
-                "0";
-
-            cards[index].style.transform =
-                "scale(.94) translateY(10px)";
-
-        }
-
-
-        await wait(300);
-
-
-        certificates.splice(
-            index,
-            1
-        );
-
-
-        if (!saveCertificates()) {
-            return;
-        }
-
-
-        closeDetail();
-
-        await wait(350);
-
-        displayCertificates();
-
-    }
-);
-
+  displayCertificates();
+});
 
 // ==========================================
 // ADD CERTIFICATE PAGE
 // ==========================================
 
 function openAddPage() {
+  if (!isLoggedIn) {
+    openLogin();
 
-    if (!isLoggedIn) {
+    return;
+  }
 
-        openLogin();
+  userMenu.classList.remove("active");
 
-        return;
+  addPage.classList.remove("closing");
 
-    }
+  addPage.classList.add("active");
 
+  lockScroll();
 
-    userMenu.classList.remove(
-        "active"
-    );
-
-
-    addPage.classList.remove(
-        "closing"
-    );
-
-
-    addPage.classList.add(
-        "active"
-    );
-
-
-    lockScroll();
-
-
-    setTimeout(() => {
-
-        addPage.scrollTop = 0;
-
-    }, 50);
-
+  setTimeout(() => {
+    addPage.scrollTop = 0;
+  }, 50);
 }
-
 
 function closeAddPage() {
+  addPage.classList.add("closing");
 
-    addPage.classList.add(
-        "closing"
-    );
+  setTimeout(() => {
+    addPage.classList.remove("active", "closing");
 
+    unlockScroll();
 
-    setTimeout(() => {
-
-        addPage.classList.remove(
-            "active",
-            "closing"
-        );
-
-        unlockScroll();
-
-        resetForm();
-
-    }, 400);
-
+    resetForm();
+  }, 400);
 }
 
-
-backBtn.addEventListener(
-    "click",
-    closeAddPage
-);
-
+backBtn.addEventListener("click", closeAddPage);
 
 // ==========================================
 // RESET FORM
 // ==========================================
 
 function resetForm() {
+  certificateForm.reset();
 
-    certificateForm.reset();
+  imagePreview.src = "";
 
-    imagePreview.src = "";
+  imagePreview.style.display = "none";
 
-    imagePreview.style.display =
-        "none";
-
-    uploadText.style.display =
-        "flex";
-
+  uploadText.style.display = "flex";
 }
-
 
 // ==========================================
 // IMAGE PREVIEW
 // ==========================================
 
-certificateImage.addEventListener(
-    "change",
-    event => {
+certificateImage.addEventListener("change", (event) => {
+  const file = event.target.files[0];
 
-        const file =
-            event.target.files[0];
+  if (!file) {
+    return;
+  }
 
-        if (!file) {
-            return;
-        }
+  if (!file.type.startsWith("image/")) {
+    alert("กรุณาเลือกไฟล์รูปภาพ");
 
+    certificateImage.value = "";
 
-        if (
-            !file.type.startsWith(
-                "image/"
-            )
-        ) {
+    return;
+  }
 
-            alert(
-                "กรุณาเลือกไฟล์รูปภาพ"
-            );
+  const reader = new FileReader();
 
-            certificateImage.value =
-                "";
+  reader.onload = (event) => {
+    imagePreview.src = event.target.result;
 
-            return;
-        }
+    imagePreview.style.display = "block";
 
+    uploadText.style.display = "none";
+  };
 
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            event => {
-
-                imagePreview.src =
-                    event.target.result;
-
-                imagePreview.style.display =
-                    "block";
-
-                uploadText.style.display =
-                    "none";
-
-            };
-
-
-        reader.readAsDataURL(
-            file
-        );
-
-    }
-);
-
+  reader.readAsDataURL(file);
+});
 
 // ==========================================
 // SAVE NEW CERTIFICATE
 // ==========================================
 
-certificateForm.addEventListener(
-    "submit",
-    event => {
+certificateForm.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-        event.preventDefault();
+  if (!isLoggedIn) {
+    openLogin();
 
+    return;
+  }
 
-        if (!isLoggedIn) {
+  const title = certificateTitle.value.trim();
 
-            openLogin();
+  const file = certificateImage.files[0];
 
-            return;
+  if (!file) {
+    alert("กรุณาเลือกรูป Certificate");
 
-        }
+    return;
+  }
 
+  if (!title) {
+    alert("กรุณาใส่ชื่อ Certificate");
 
-        const title =
-            certificateTitle.value.trim();
+    certificateTitle.focus();
 
-        const file =
-            certificateImage.files[0];
+    return;
+  }
 
+  const reader = new FileReader();
 
-        if (!file) {
+  reader.onload = (event) => {
+    certificates.push({
+      id: Date.now(),
 
-            alert(
-                "กรุณาเลือกรูป Certificate"
-            );
+      title: title,
 
-            return;
+      image: event.target.result,
+    });
 
-        }
+    if (!saveCertificates()) {
+      certificates.pop();
 
-
-        if (!title) {
-
-            alert(
-                "กรุณาใส่ชื่อ Certificate"
-            );
-
-            certificateTitle.focus();
-
-            return;
-
-        }
-
-
-        const reader =
-            new FileReader();
-
-
-        reader.onload =
-            event => {
-
-                certificates.push({
-
-                    id: Date.now(),
-
-                    title: title,
-
-                    image:
-                        event.target.result
-
-                });
-
-
-                if (
-                    !saveCertificates()
-                ) {
-
-                    certificates.pop();
-
-                    return;
-
-                }
-
-
-                displayCertificates();
-
-
-                closeAddPage();
-
-            };
-
-
-        reader.readAsDataURL(
-            file
-        );
-
+      return;
     }
-);
 
+    displayCertificates();
+
+    closeAddPage();
+  };
+
+  reader.readAsDataURL(file);
+});
 
 // ==========================================
 // ESC KEY
 // ==========================================
 
-document.addEventListener(
-    "keydown",
-    event => {
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") {
+    return;
+  }
 
-        if (
-            event.key !== "Escape"
-        ) {
-            return;
-        }
+  if (userMenu.classList.contains("active")) {
+    userMenu.classList.remove("active");
 
+    return;
+  }
 
-        if (
-            userMenu.classList.contains(
-                "active"
-            )
-        ) {
+  if (detailModal.classList.contains("active")) {
+    closeDetail();
 
-            userMenu.classList.remove(
-                "active"
-            );
+    return;
+  }
 
-            return;
+  if (loginModal.classList.contains("active")) {
+    closeLogin();
 
-        }
+    return;
+  }
 
-
-        if (
-            detailModal.classList.contains(
-                "active"
-            )
-        ) {
-
-            closeDetail();
-
-            return;
-
-        }
-
-
-        if (
-            loginModal.classList.contains(
-                "active"
-            )
-        ) {
-
-            closeLogin();
-
-            return;
-
-        }
-
-
-        if (
-            addPage.classList.contains(
-                "active"
-            )
-        ) {
-
-            closeAddPage();
-
-        }
-
-    }
-);
-
+  if (addPage.classList.contains("active")) {
+    closeAddPage();
+  }
+});
 
 // ==========================================
 // INITIALIZE

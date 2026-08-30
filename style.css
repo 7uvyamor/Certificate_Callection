@@ -1,755 +1,676 @@
-
 /* ==========================================
    MIDNIGHT LUXURY
    RESPONSIVE CERTIFICATE WEBSITE
 ========================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "PT Serif", serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "PT Serif", serif;
 }
 
 :root {
-    --bg: #0b0c0f;
-    --bg-soft: #111318;
-    --card: #15171c;
-    --card-hover: #191c22;
+  --bg: #0b0c0f;
+  --bg-soft: #111318;
+  --card: #15171c;
+  --card-hover: #191c22;
 
-    --white: #f3f1eb;
-    --text: #e8e6e0;
-    --muted: #8e9199;
+  --white: #f3f1eb;
+  --text: #e8e6e0;
+  --muted: #8e9199;
 
-    --gold: #c8aa6e;
-    --border: rgba(255, 255, 255, 0.08);
+  --gold: #c8aa6e;
+  --border: rgba(255, 255, 255, 0.08);
 
-    --danger: #d45c5c;
+  --danger: #d45c5c;
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family:
-        Inter,
-        "Segoe UI",
-        Arial,
-        sans-serif;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
 
-    background: var(--bg);
-    color: var(--text);
+  background: var(--bg);
+  color: var(--text);
 
-    min-height: 100vh;
+  min-height: 100vh;
 
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
-
 
 /* ==========================================
    NAVBAR
 ========================================== */
 
 .navbar {
-    width: 100%;
-    height: 92px;
+  width: 100%;
+  height: 92px;
 
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    padding: 0 clamp(20px, 6vw, 90px);
+  padding: 0 clamp(20px, 6vw, 90px);
 
-    background: rgba(11, 12, 15, 0.9);
+  background: rgba(11, 12, 15, 0.9);
 
-    border-bottom:
-        1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 
-    backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
 
-    position: sticky;
-    top: 0;
+  position: sticky;
+  top: 0;
 
-    z-index: 100;
+  z-index: 100;
 }
 
 .nav-left {
-    min-width: 120px;
+  min-width: 120px;
 }
 
 .site-name {
-    color: var(--white);
+  color: var(--white);
 
-    font-size: 18px;
-    font-weight: 500;
+  font-size: 18px;
+  font-weight: 500;
 
-    letter-spacing: 0.5px;
+  letter-spacing: 0.5px;
 }
-
 
 /* ==========================================
    STAR
 ========================================== */
 
 .star {
-    position: absolute;
+  position: absolute;
 
-    left: 50%;
+  left: 50%;
 
-    transform: translateX(-50%);
+  transform: translateX(-50%);
 
-    color: var(--gold);
+  color: var(--gold);
 
-    font-size: 34px;
+  font-size: 34px;
 
-    line-height: 1;
+  line-height: 1;
 
-    transition: 0.3s;
+  transition: 0.3s;
 }
 
 .star:hover {
-    transform:
-        translateX(-50%)
-        scale(1.12)
-        rotate(8deg);
+  transform: translateX(-50%) scale(1.12) rotate(8deg);
 }
-
 
 /* ==========================================
    NAV RIGHT
 ========================================== */
 
 .nav-right {
-    min-width: 120px;
+  min-width: 120px;
 
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .nav-login-btn,
 .user-btn {
-    background: transparent;
+  background: transparent;
 
-    color: var(--text);
+  color: var(--text);
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    padding: 10px 17px;
+  padding: 10px 17px;
 
-    border-radius: 7px;
+  border-radius: 7px;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: 0.25s;
+  transition: 0.25s;
 }
 
 .nav-login-btn:hover,
 .user-btn:hover {
-    border-color:
-        rgba(200, 170, 110, 0.5);
+  border-color: rgba(200, 170, 110, 0.5);
 
-    color: var(--gold);
+  color: var(--gold);
 
-    background:
-        rgba(200, 170, 110, 0.04);
+  background: rgba(200, 170, 110, 0.04);
 }
-
 
 /* ==========================================
    USER
 ========================================== */
 
 .user-area {
-    display: none;
+  display: none;
 
-    position: relative;
+  position: relative;
 }
 
 .user-area.active {
-    display: block;
+  display: block;
 }
 
 .user-menu {
-    display: none;
+  display: none;
 
-    position: absolute;
+  position: absolute;
 
-    top: 52px;
-    right: 0;
+  top: 52px;
+  right: 0;
 
-    width: 210px;
+  width: 210px;
 
-    background: var(--card);
+  background: var(--card);
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    padding: 15px;
+  padding: 15px;
 
-    box-shadow:
-        0 20px 50px
-        rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 }
 
 .user-menu.active {
-    display: block;
+  display: block;
 }
 
 .user-info {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    gap: 5px;
+  gap: 5px;
 
-    padding:
-        3px 5px 15px;
+  padding: 3px 5px 15px;
 
-    border-bottom:
-        1px solid var(--border);
+  border-bottom: 1px solid var(--border);
 }
 
 .user-info span {
-    font-size: 11px;
-    color: var(--muted);
+  font-size: 11px;
+  color: var(--muted);
 }
 
 .user-info strong {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--white);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
 }
 
 .user-menu button {
-    width: 100%;
+  width: 100%;
 
-    border: none;
+  border: none;
 
-    background: transparent;
+  background: transparent;
 
-    text-align: left;
+  text-align: left;
 
-    padding:
-        14px 5px 3px;
+  padding: 14px 5px 3px;
 
-    color: var(--danger);
+  color: var(--danger);
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 }
-
 
 /* ==========================================
    MAIN
 ========================================== */
 
 .container {
-    width: 100%;
+  width: 100%;
 
-    max-width: 1500px;
+  max-width: 1500px;
 
-    margin: 0 auto;
+  margin: 0 auto;
 
-    padding:
-        clamp(55px, 8vw, 100px)
-        clamp(20px, 6vw, 90px)
-        120px;
+  padding: clamp(55px, 8vw, 100px) clamp(20px, 6vw, 90px) 120px;
 }
-
 
 /* ==========================================
    TITLE
 ========================================== */
 
 .page-title {
-    text-align: center;
+  text-align: center;
 
-    margin-bottom:
-        clamp(40px, 6vw, 70px);
+  margin-bottom: clamp(40px, 6vw, 70px);
 }
 
 .page-title h1 {
-    color: var(--white);
+  color: var(--white);
 
-    font-size:
-        clamp(30px, 4vw, 44px);
+  font-size: clamp(30px, 4vw, 44px);
 
-    font-weight: 500;
+  font-weight: 500;
 
-    letter-spacing: -1px;
+  letter-spacing: -1px;
 
-    margin-bottom: 14px;
+  margin-bottom: 14px;
 }
 
 .page-title p {
-    color: var(--muted);
+  color: var(--muted);
 
-    font-size:
-        clamp(12px, 1.5vw, 14px);
+  font-size: clamp(12px, 1.5vw, 14px);
 }
-
 
 /* ==========================================
    CERTIFICATE GRID
 ========================================== */
 
 .certificate-grid {
-    display: grid;
+  display: grid;
 
-    /*
+  /*
        Desktop:
        5 ใบต่อแถว
     */
 
-    grid-template-columns:
-        repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 
-    gap:
-        clamp(20px, 2.2vw, 32px);
+  gap: clamp(20px, 2.2vw, 32px);
 }
-
 
 /* ==========================================
    CERTIFICATE CARD
 ========================================== */
 
 .certificate-card {
-    min-width: 0;
+  min-width: 0;
 
-    background: var(--card);
+  background: var(--card);
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition:
-        transform 0.3s ease,
-        border-color 0.3s ease,
-        background 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
 }
 
 .certificate-card:hover {
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 
-    background:
-        var(--card-hover);
+  background: var(--card-hover);
 
-    border-color:
-        rgba(200, 170, 110, 0.28);
+  border-color: rgba(200, 170, 110, 0.28);
 }
 
 .certificate-card img {
-    display: block;
+  display: block;
 
-    width: 100%;
+  width: 100%;
 
-    /*
+  /*
        Responsive image
     */
 
-    aspect-ratio: 1.45 / 1;
+  aspect-ratio: 1.45 / 1;
 
-    height: auto;
+  height: auto;
 
-    object-fit: cover;
+  object-fit: cover;
 
-    opacity: 0.92;
+  opacity: 0.92;
 
-    transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 
 .certificate-card:hover img {
-    opacity: 1;
+  opacity: 1;
 }
 
 .card-info {
-    padding:
-        16px 18px 19px;
+  padding: 16px 18px 19px;
 }
 
 .card-info h3 {
-    color: var(--text);
+  color: var(--text);
 
-    font-size:
-        clamp(13px, 1.2vw, 14px);
+  font-size: clamp(13px, 1.2vw, 14px);
 
-    font-weight: 500;
+  font-weight: 500;
 
-    line-height: 1.5;
+  line-height: 1.5;
 
-    white-space: nowrap;
+  white-space: nowrap;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
-
 
 /* ==========================================
    ADD CARD
 ========================================== */
 
 .add-card {
-    min-width: 0;
+  min-width: 0;
 
-    aspect-ratio: 1.45 / 1;
+  aspect-ratio: 1.45 / 1;
 
-    border:
-        1px dashed
-        rgba(255, 255, 255, 0.16);
+  border: 1px dashed rgba(255, 255, 255, 0.16);
 
-    border-radius: 10px;
+  border-radius: 10px;
 
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    align-items: center;
+  align-items: center;
 
-    justify-content: center;
+  justify-content: center;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: 0.3s;
+  transition: 0.3s;
 }
 
 .add-card:hover {
-    border-color:
-        rgba(200, 170, 110, 0.5);
+  border-color: rgba(200, 170, 110, 0.5);
 
-    background:
-        rgba(200, 170, 110, 0.025);
+  background: rgba(200, 170, 110, 0.025);
 }
 
 .add-card .plus {
-    font-size: 38px;
+  font-size: 38px;
 
-    font-weight: 200;
+  font-weight: 200;
 
-    color: var(--gold);
+  color: var(--gold);
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .add-card p {
-    color: var(--muted);
+  color: var(--muted);
 
-    font-size: 13px;
+  font-size: 13px;
 }
-
 
 /* ==========================================
    MODAL
 ========================================== */
 
 .modal {
-    position: fixed;
+  position: fixed;
 
-    inset: 0;
+  inset: 0;
 
-    display: none;
+  display: none;
 
-    align-items: center;
+  align-items: center;
 
-    justify-content: center;
+  justify-content: center;
 
-    padding:
-        clamp(15px, 4vw, 40px);
+  padding: clamp(15px, 4vw, 40px);
 
-    background:
-        rgba(0, 0, 0, 0.82);
+  background: rgba(0, 0, 0, 0.82);
 
-    backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 
-    z-index: 500;
+  z-index: 500;
 }
 
 .modal.active {
-    display: flex;
+  display: flex;
 }
 
 .modal-content {
-    position: relative;
+  position: relative;
 
-    width: min(900px, 100%);
+  width: min(900px, 100%);
 
-    max-height: 92vh;
+  max-height: 92vh;
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    background: var(--card);
+  background: var(--card);
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    padding:
-        clamp(15px, 3vw, 28px);
+  padding: clamp(15px, 3vw, 28px);
 
-    animation:
-        popup 0.25s ease;
+  animation: popup 0.25s ease;
 }
 
 @keyframes popup {
-    from {
-        opacity: 0;
-        transform:
-            scale(0.97)
-            translateY(8px);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(8px);
+  }
 
-    to {
-        opacity: 1;
-        transform:
-            scale(1)
-            translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
-
 
 /* ==========================================
    CLOSE BUTTON
 ========================================== */
 
 .close-btn {
-    position: absolute;
+  position: absolute;
 
-    top: 12px;
-    right: 12px;
+  top: 12px;
+  right: 12px;
 
-    width: 38px;
-    height: 38px;
+  width: 38px;
+  height: 38px;
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    background:
-        rgba(0, 0, 0, 0.55);
+  background: rgba(0, 0, 0, 0.55);
 
-    color: var(--text);
+  color: var(--text);
 
-    font-size: 24px;
+  font-size: 24px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    z-index: 5;
+  z-index: 5;
 
-    transition: 0.2s;
+  transition: 0.2s;
 }
 
 .close-btn:hover {
-    color: var(--gold);
+  color: var(--gold);
 
-    border-color:
-        rgba(200, 170, 110, 0.4);
+  border-color: rgba(200, 170, 110, 0.4);
 }
-
 
 /* ==========================================
    DETAIL IMAGE
 ========================================== */
 
 .modal-content > img {
-    display: block;
+  display: block;
 
-    width: 100%;
+  width: 100%;
 
-    max-height: 65vh;
+  max-height: 65vh;
 
-    object-fit: contain;
+  object-fit: contain;
 
-    background: #0b0c0f;
+  background: #0b0c0f;
 
-    border-radius: 7px;
+  border-radius: 7px;
 }
-
 
 /* ==========================================
    DETAIL INFO
 ========================================== */
 
 .detail-info {
-    padding:
-        22px 3px 3px;
+  padding: 22px 3px 3px;
 }
 
 .detail-info h2 {
-    font-size:
-        clamp(18px, 2.5vw, 24px);
+  font-size: clamp(18px, 2.5vw, 24px);
 
-    font-weight: 500;
+  font-weight: 500;
 
-    color: var(--white);
+  color: var(--white);
 
-    padding-right: 45px;
+  padding-right: 45px;
 }
-
 
 /* ==========================================
    DELETE
 ========================================== */
 
 .delete-btn {
-    width: 100%;
+  width: 100%;
 
-    margin-top: 20px;
+  margin-top: 20px;
 
-    padding: 13px;
+  padding: 13px;
 
-    border:
-        1px solid
-        rgba(212, 92, 92, 0.35);
+  border: 1px solid rgba(212, 92, 92, 0.35);
 
-    border-radius: 7px;
+  border-radius: 7px;
 
-    background: transparent;
+  background: transparent;
 
-    color: #d98282;
+  color: #d98282;
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: 0.25s;
+  transition: 0.25s;
 }
 
 .delete-btn:hover {
-    background:
-        rgba(212, 92, 92, 0.08);
+  background: rgba(212, 92, 92, 0.08);
 
-    border-color:
-        rgba(212, 92, 92, 0.6);
+  border-color: rgba(212, 92, 92, 0.6);
 }
-
 
 /* ==========================================
    LOGIN
 ========================================== */
 
 .login-box {
-    position: relative;
+  position: relative;
 
-    width: min(400px, 100%);
+  width: min(400px, 100%);
 
-    background: var(--card);
+  background: var(--card);
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 12px;
+  border-radius: 12px;
 
-    padding:
-        clamp(30px, 6vw, 48px)
-        clamp(22px, 6vw, 42px);
+  padding: clamp(30px, 6vw, 48px) clamp(22px, 6vw, 42px);
 
-    text-align: center;
+  text-align: center;
 
-    box-shadow:
-        0 25px 70px
-        rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
 
-    animation:
-        fadeUp 0.3s ease;
+  animation: fadeUp 0.3s ease;
 }
 
 .login-star {
-    color: var(--gold);
+  color: var(--gold);
 
-    font-size: 42px;
+  font-size: 42px;
 
-    margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 
 .login-box h1 {
-    font-size:
-        clamp(26px, 5vw, 30px);
+  font-size: clamp(26px, 5vw, 30px);
 
-    font-weight: 500;
+  font-weight: 500;
 
-    margin-bottom: 9px;
+  margin-bottom: 9px;
 }
 
 .login-box > p {
-    color: var(--muted);
+  color: var(--muted);
 
-    font-size: 13px;
+  font-size: 13px;
 
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
-
 
 /* ==========================================
    LOGIN INPUT
 ========================================== */
 
 .login-group {
-    text-align: left;
+  text-align: left;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
 
 .login-group label {
-    display: block;
+  display: block;
 
-    color: var(--text);
+  color: var(--text);
 
-    font-size: 13px;
+  font-size: 13px;
 
-    margin-bottom: 9px;
+  margin-bottom: 9px;
 }
 
 .login-group input {
-    width: 100%;
+  width: 100%;
 
-    padding: 13px 14px;
+  padding: 13px 14px;
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 7px;
+  border-radius: 7px;
 
-    background: #0f1014;
+  background: #0f1014;
 
-    color: var(--text);
+  color: var(--text);
 
-    font-size: 14px;
+  font-size: 14px;
 
-    outline: none;
+  outline: none;
 
-    transition: 0.2s;
+  transition: 0.2s;
 }
 
 .login-group input:focus {
-    border-color:
-        rgba(200, 170, 110, 0.55);
+  border-color: rgba(200, 170, 110, 0.55);
 }
 
 .login-error {
-    min-height: 20px;
+  min-height: 20px;
 
-    color: var(--danger);
+  color: var(--danger);
 
-    font-size: 12px;
+  font-size: 12px;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
-
 
 /* ==========================================
    LOGIN BUTTON
@@ -757,110 +678,98 @@ body {
 
 .login-btn,
 .save-btn {
-    width: 100%;
+  width: 100%;
 
-    padding: 13px;
+  padding: 13px;
 
-    border:
-        1px solid
-        rgba(200, 170, 110, 0.45);
+  border: 1px solid rgba(200, 170, 110, 0.45);
 
-    border-radius: 7px;
+  border-radius: 7px;
 
-    background:
-        rgba(200, 170, 110, 0.08);
+  background: rgba(200, 170, 110, 0.08);
 
-    color: var(--gold);
+  color: var(--gold);
 
-    font-size: 14px;
+  font-size: 14px;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    transition: 0.25s;
+  transition: 0.25s;
 }
 
 .login-btn:hover,
 .save-btn:hover {
-    background:
-        rgba(200, 170, 110, 0.15);
+  background: rgba(200, 170, 110, 0.15);
 }
-
 
 /* ==========================================
    LOADING
 ========================================== */
 
 .loading-page {
-    position: fixed;
+  position: fixed;
 
-    inset: 0;
+  inset: 0;
 
-    display: none;
+  display: none;
 
-    align-items: center;
+  align-items: center;
 
-    justify-content: center;
+  justify-content: center;
 
-    padding: 20px;
+  padding: 20px;
 
-    background: var(--bg);
+  background: var(--bg);
 
-    color: white;
+  color: white;
 
-    z-index: 1000;
+  z-index: 1000;
 
-    text-align: center;
+  text-align: center;
 }
 
 .loading-page.active {
-    display: flex;
+  display: flex;
 }
 
 .loading-star {
-    color: var(--gold);
+  color: var(--gold);
 
-    font-size: 50px;
+  font-size: 50px;
 
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 
-    animation:
-        pulse 1.2s infinite;
+  animation: pulse 1.2s infinite;
 }
 
 .spinner {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 
-    border:
-        2px solid
-        rgba(255,255,255,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 
-    border-top-color:
-        var(--gold);
+  border-top-color: var(--gold);
 
-    border-radius: 50%;
+  border-radius: 50%;
 
-    margin:
-        0 auto 25px;
+  margin: 0 auto 25px;
 
-    animation:
-        spin 0.8s linear infinite;
+  animation: spin 0.8s linear infinite;
 }
 
 .loading-box h2 {
-    font-size: 19px;
+  font-size: 19px;
 
-    font-weight: 500;
+  font-weight: 500;
 
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 }
 
 .loading-box p {
-    color: var(--muted);
+  color: var(--muted);
 
-    font-size: 13px;
+  font-size: 13px;
 }
-
 
 /* =========================================================
    ADD PAGE
@@ -868,527 +777,361 @@ body {
 ========================================================= */
 
 .add-page {
-    position: fixed;
+  position: fixed;
 
-    inset: 0;
+  inset: 0;
 
-    display: none;
+  display: none;
 
-    overflow-y: auto;
+  overflow-y: auto;
 
-    background:
-        radial-gradient(
-            circle at 50% 0%,
-            rgba(201,173,114,0.06),
-            transparent 35%
-        ),
-        var(--bg);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(201, 173, 114, 0.06),
+      transparent 35%
+    ),
+    var(--bg);
 
-    padding:
-        clamp(45px, 8vw, 85px)
-        24px;
+  padding: clamp(45px, 8vw, 85px) 24px;
 
-    z-index: 400;
+  z-index: 400;
 }
-
 
 /* เปิดหน้า */
 
 .add-page.active {
-    display: block;
+  display: block;
 
-    animation:
-        addPageEnter
-        0.45s
-        var(--ease);
+  animation: addPageEnter 0.45s var(--ease);
 }
-
 
 /* Animation หน้า */
 
 @keyframes addPageEnter {
+  from {
+    opacity: 0;
 
-    from {
-        opacity: 0;
+    transform: translateY(15px);
+  }
 
-        transform:
-            translateY(15px);
-    }
+  to {
+    opacity: 1;
 
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0);
-    }
-
+    transform: translateY(0);
+  }
 }
-
 
 /* =========================================================
    ADD CONTAINER
 ========================================================= */
 
 .add-container {
-    width:
-        min(680px, 100%);
+  width: min(680px, 100%);
 
-    margin:
-        0 auto;
+  margin: 0 auto;
 
-    padding:
-        clamp(32px, 6vw, 50px);
+  padding: clamp(32px, 6vw, 50px);
 
-    border-radius:
-        14px;
+  border-radius: 14px;
 
-    background:
-        linear-gradient(
-            145deg,
-            #171a20,
-            #101216
-        );
+  background: linear-gradient(145deg, #171a20, #101216);
 
-    box-shadow:
-        0 25px 70px
-        rgba(0,0,0,0.35);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
 
-    animation:
-        addBoxEnter
-        0.55s
-        var(--ease)
-        0.05s
-        both;
+  animation: addBoxEnter 0.55s var(--ease) 0.05s both;
 }
-
 
 @keyframes addBoxEnter {
+  from {
+    opacity: 0;
 
-    from {
-        opacity: 0;
+    transform: translateY(22px) scale(0.98);
+  }
 
-        transform:
-            translateY(22px)
-            scale(0.98);
-    }
+  to {
+    opacity: 1;
 
-    to {
-        opacity: 1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
+    transform: translateY(0) scale(1);
+  }
 }
-
 
 /* =========================================================
    BACK BUTTON
 ========================================================= */
 
 .back-btn {
+  display: inline-flex;
 
-    display:
-        inline-flex;
+  align-items: center;
 
-    align-items:
-        center;
+  gap: 9px;
 
-    gap:
-        9px;
+  padding: 10px 18px;
 
-    padding:
-        10px 18px;
+  margin-bottom: 36px;
 
-    margin-bottom:
-        36px;
+  border: 1px solid rgba(201, 173, 114, 0.35);
 
-    border:
-        1px solid
-        rgba(201,173,114,0.35);
+  border-radius: 10px;
 
-    border-radius:
-        10px;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 173, 114, 0.14),
+    rgba(120, 100, 180, 0.12)
+  );
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(201,173,114,0.14),
-            rgba(120,100,180,0.12)
-        );
+  color: #d8c28f;
 
-    color:
-        #d8c28f;
+  font-size: 14px;
 
-    font-size:
-        14px;
+  font-weight: 500;
 
-    font-weight:
-        500;
+  cursor: pointer;
 
-    cursor:
-        pointer;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
 
-    box-shadow:
-        0 4px 18px
-        rgba(0,0,0,0.25);
-
-    transition:
-        color 0.3s ease,
-        background 0.3s ease,
-        border-color 0.3s ease,
-        box-shadow 0.35s ease,
-        transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.35s ease,
+    transform 0.3s ease;
 }
-
 
 /* ไม่เพิ่ม ← เพราะ HTML มีอยู่แล้ว */
 
 .back-btn::before {
-    content:
-        none;
+  content: none;
 }
-
 
 .back-btn:hover {
+  color: #ffffff;
 
-    color:
-        #ffffff;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 173, 114, 0.28),
+    rgba(139, 92, 246, 0.22)
+  );
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(201,173,114,0.28),
-            rgba(139,92,246,0.22)
-        );
+  border-color: rgba(201, 173, 114, 0.7);
 
-    border-color:
-        rgba(201,173,114,0.7);
+  box-shadow:
+    0 0 18px rgba(201, 173, 114, 0.14),
+    0 8px 25px rgba(0, 0, 0, 0.3);
 
-    box-shadow:
-        0 0 18px
-        rgba(201,173,114,0.14),
-        0 8px 25px
-        rgba(0,0,0,0.3);
-
-    transform:
-        translateX(-4px);
+  transform: translateX(-4px);
 }
-
 
 .back-btn:active {
-
-    transform:
-        translateX(-2px)
-        scale(0.96);
+  transform: translateX(-2px) scale(0.96);
 }
-
 
 .back-btn:focus-visible {
+  outline: none;
 
-    outline:
-        none;
+  border-color: #a78bfa;
 
-    border-color:
-        #a78bfa;
-
-    box-shadow:
-        0 0 0 3px
-        rgba(167,139,250,0.18),
-        0 0 20px
-        rgba(167,139,250,0.15);
+  box-shadow:
+    0 0 0 3px rgba(167, 139, 250, 0.18),
+    0 0 20px rgba(167, 139, 250, 0.15);
 }
-
 
 /* =========================================================
    TITLE
 ========================================================= */
 
 .add-container h1 {
+  margin: 0 0 12px;
 
-    margin:
-        0 0 12px;
+  font-size: clamp(25px, 5vw, 30px);
 
-    font-size:
-        clamp(25px,5vw,30px);
+  font-weight: 500;
 
-    font-weight:
-        500;
+  line-height: 1.3;
 
-    line-height:
-        1.3;
-
-    color:
-        var(--white);
+  color: var(--white);
 }
-
 
 /* =========================================================
    SUBTITLE
 ========================================================= */
 
 .add-subtitle {
+  color: var(--muted);
 
-    color:
-        var(--muted);
+  font-size: 13px;
 
-    font-size:
-        13px;
+  line-height: 1.7;
 
-    line-height:
-        1.7;
-
-    margin:
-        0 0 42px;
+  margin: 0 0 42px;
 }
-
 
 /* =========================================================
    FORM
 ========================================================= */
 
 .form-group {
-
-    margin-bottom:
-        32px;
+  margin-bottom: 32px;
 }
-
 
 .form-group > label {
+  display: block;
 
-    display:
-        block;
+  margin-bottom: 10px;
 
-    margin-bottom:
-        10px;
+  color: var(--text);
 
-    color:
-        var(--text);
-
-    font-size:
-        13px;
+  font-size: 13px;
 }
-
 
 /* ช่องกรอก */
 
 .form-group input[type="text"] {
+  min-height: 48px;
 
-    min-height:
-        48px;
+  padding: 13px 15px;
 
-    padding:
-        13px 15px;
+  line-height: 1.5;
 
-    line-height:
-        1.5;
-
-    transition:
-        border-color 0.3s ease,
-        box-shadow 0.3s ease,
-        background 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
 }
-
 
 .form-group input[type="text"]:focus {
+  outline: none;
 
-    outline:
-        none;
+  border-color: rgba(201, 173, 114, 0.7);
 
-    border-color:
-        rgba(201,173,114,0.7);
-
-    box-shadow:
-        0 0 0 3px
-        rgba(201,173,114,0.08);
+  box-shadow: 0 0 0 3px rgba(201, 173, 114, 0.08);
 }
-
 
 /* =========================================================
    UPLOAD BOX
 ========================================================= */
 
 .upload-box {
+  min-height: 190px;
 
-    min-height:
-        190px;
+  padding: 28px 22px;
 
-    padding:
-        28px 22px;
+  margin-top: 2px;
 
-    margin-top:
-        2px;
-
-    transition:
-        transform 0.35s var(--ease),
-        border-color 0.35s ease,
-        background 0.35s ease,
-        box-shadow 0.35s ease;
+  transition:
+    transform 0.35s var(--ease),
+    border-color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
 }
-
 
 .upload-box:hover {
+  transform: translateY(-2px);
 
-    transform:
-        translateY(-2px);
+  border-color: rgba(201, 173, 114, 0.45);
 
-    border-color:
-        rgba(201,173,114,0.45);
-
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,0.25);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
 }
-
 
 /* =========================================================
    IMAGE PREVIEW
 ========================================================= */
 
 #imagePreview {
+  width: 100%;
 
-    width:
-        100%;
+  height: 100%;
 
-    height:
-        100%;
+  max-width: 100%;
 
-    max-width:
-        100%;
+  margin-top: 18px;
 
-    margin-top:
-        18px;
+  border-radius: 10px;
 
-    border-radius:
-        10px;
+  object-fit: contain;
 
-    object-fit:
-        contain;
-
-    transition:
-        opacity 0.35s ease,
-        transform 0.4s var(--ease);
+  transition:
+    opacity 0.35s ease,
+    transform 0.4s var(--ease);
 }
-
 
 /* =========================================================
    SAVE BUTTON
 ========================================================= */
 
 .save-btn {
+  min-height: 50px;
 
-    min-height:
-        50px;
+  margin-top: 8px;
 
-    margin-top:
-        8px;
-
-    transition:
-        transform 0.3s var(--ease),
-        box-shadow 0.35s ease,
-        filter 0.3s ease;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.35s ease,
+    filter 0.3s ease;
 }
-
 
 .save-btn:hover {
-
-    transform:
-        translateY(-2px);
+  transform: translateY(-2px);
 }
-
 
 .save-btn:active {
-
-    transform:
-        translateY(0)
-        scale(0.98);
+  transform: translateY(0) scale(0.98);
 }
-
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
 @media (max-width: 650px) {
+  .add-page {
+    padding: 28px 15px;
+  }
 
-    .add-page {
+  .add-container {
+    padding: 28px 20px 34px;
 
-        padding:
-            28px 15px;
-    }
+    border-radius: 12px;
+  }
 
+  .back-btn {
+    margin-bottom: 30px;
+  }
 
-    .add-container {
+  .add-subtitle {
+    margin-bottom: 34px;
+  }
 
-        padding:
-            28px 20px 34px;
+  .form-group {
+    margin-bottom: 26px;
+  }
 
-        border-radius:
-            12px;
-    }
+  .upload-box {
+    min-height: 165px;
 
+    padding: 24px 16px;
+  }
 
-    .back-btn {
-
-        margin-bottom:
-            30px;
-    }
-
-
-    .add-subtitle {
-
-        margin-bottom:
-            34px;
-    }
-
-
-    .form-group {
-
-        margin-bottom:
-            26px;
-    }
-
-
-    .upload-box {
-
-        min-height:
-            165px;
-
-        padding:
-            24px 16px;
-    }
-
-
-    .save-btn {
-
-        width:
-            100%;
-    }
-
+  .save-btn {
+    width: 100%;
+  }
 }
-
 
 /* =========================================================
    REDUCE MOTION
 ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
+  .add-page,
+  .add-container,
+  .back-btn,
+  .upload-box,
+  #imagePreview,
+  .save-btn {
+    animation: none !important;
 
-    .add-page,
-    .add-container,
-    .back-btn,
-    .upload-box,
-    #imagePreview,
-    .save-btn {
-
-        animation:
-            none !important;
-
-        transition:
-            none !important;
-    }
-
+    transition: none !important;
+  }
 }
 
 /* ==========================================
@@ -1396,160 +1139,150 @@ body {
 ========================================== */
 
 .form-group {
-    margin-bottom: 27px;
+  margin-bottom: 27px;
 }
 
 .form-group > label {
-    display: block;
+  display: block;
 
-    color: var(--text);
+  color: var(--text);
 
-    font-size: 13px;
+  font-size: 13px;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .form-group input[type="text"] {
-    width: 100%;
+  width: 100%;
 
-    padding: 13px 14px;
+  padding: 13px 14px;
 
-    border:
-        1px solid var(--border);
+  border: 1px solid var(--border);
 
-    border-radius: 7px;
+  border-radius: 7px;
 
-    background: #0f1014;
+  background: #0f1014;
 
-    color: var(--text);
+  color: var(--text);
 
-    font-size: 14px;
+  font-size: 14px;
 
-    outline: none;
+  outline: none;
 }
 
 .form-group input[type="text"]:focus {
-    border-color:
-        rgba(200, 170, 110, 0.55);
+  border-color: rgba(200, 170, 110, 0.55);
 }
-
 
 /* ==========================================
    UPLOAD
 ========================================== */
 
 .upload-box {
-    width: 100%;
+  width: 100%;
 
-    height:
-        clamp(190px, 35vw, 260px);
+  height: clamp(190px, 35vw, 260px);
 
-    border:
-        1px dashed
-        rgba(255,255,255,0.15);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
 
-    border-radius: 9px;
+  border-radius: 9px;
 
-    display: flex;
+  display: flex;
 
-    align-items: center;
+  align-items: center;
 
-    justify-content: center;
+  justify-content: center;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    cursor: pointer;
+  cursor: pointer;
 
-    color: var(--muted);
+  color: var(--muted);
 
-    transition: 0.25s;
+  transition: 0.25s;
 }
 
 .upload-box:hover {
-    border-color:
-        rgba(200,170,110,0.5);
+  border-color: rgba(200, 170, 110, 0.5);
 }
 
 #uploadText {
-    display: flex;
+  display: flex;
 
-    flex-direction: column;
+  flex-direction: column;
 
-    align-items: center;
+  align-items: center;
 
-    gap: 10px;
+  gap: 10px;
 }
 
 .upload-icon {
-    font-size: 38px;
+  font-size: 38px;
 
-    color: var(--gold);
+  color: var(--gold);
 
-    font-weight: 200;
+  font-weight: 200;
 }
 
 #imagePreview {
-    display: none;
+  display: none;
 
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 
-    object-fit: contain;
+  object-fit: contain;
 }
-
 
 /* ==========================================
    DATABASE LOADING
 ========================================== */
 
 .loading-text {
-    grid-column: 1 / -1;
+  grid-column: 1 / -1;
 
-    text-align: center;
+  text-align: center;
 
-    padding: 80px 20px;
+  padding: 80px 20px;
 
-    color: var(--muted);
+  color: var(--muted);
 
-    font-size: 14px;
+  font-size: 14px;
 }
-
 
 /* ==========================================
    ANIMATIONS
 ========================================== */
 
 @keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(12px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes pulse {
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.8;
-    }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
 
-    50% {
-        transform: scale(1.12);
-        opacity: 1;
-    }
+  50% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
 }
-
 
 /* ==========================================
    TABLET
@@ -1557,14 +1290,10 @@ body {
 ========================================== */
 
 @media (max-width: 1200px) {
-
-    .certificate-grid {
-        grid-template-columns:
-            repeat(4, minmax(0, 1fr));
-    }
-
+  .certificate-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
-
 
 /* ==========================================
    TABLET
@@ -1572,26 +1301,20 @@ body {
 ========================================== */
 
 @media (max-width: 900px) {
+  .navbar {
+    height: 84px;
 
-    .navbar {
-        height: 84px;
+    padding: 0 30px;
+  }
 
-        padding:
-            0 30px;
-    }
+  .container {
+    padding: 65px 30px 100px;
+  }
 
-    .container {
-        padding:
-            65px 30px 100px;
-    }
-
-    .certificate-grid {
-        grid-template-columns:
-            repeat(3, minmax(0, 1fr));
-    }
-
+  .certificate-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
-
 
 /* ==========================================
    MOBILE
@@ -1599,102 +1322,90 @@ body {
 ========================================== */
 
 @media (max-width: 650px) {
+  .navbar {
+    height: 76px;
 
-    .navbar {
-        height: 76px;
+    padding: 0 18px;
+  }
 
-        padding:
-            0 18px;
-    }
+  .nav-left,
+  .nav-right {
+    min-width: 90px;
+  }
 
-    .nav-left,
-    .nav-right {
-        min-width: 90px;
-    }
+  .site-name {
+    font-size: 14px;
+  }
 
-    .site-name {
-        font-size: 14px;
-    }
+  .star {
+    font-size: 29px;
+  }
 
-    .star {
-        font-size: 29px;
-    }
+  .nav-login-btn,
+  .user-btn {
+    padding: 8px 12px;
 
-    .nav-login-btn,
-    .user-btn {
-        padding:
-            8px 12px;
+    font-size: 13px;
+  }
 
-        font-size: 13px;
-    }
+  .container {
+    padding: 50px 18px 80px;
+  }
 
-    .container {
-        padding:
-            50px 18px 80px;
-    }
+  .certificate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    .certificate-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+    gap: 18px 14px;
+  }
 
-        gap:
-            18px 14px;
-    }
+  .certificate-card img {
+    aspect-ratio: 1.35 / 1;
+  }
 
-    .certificate-card img {
-        aspect-ratio:
-            1.35 / 1;
-    }
+  .card-info {
+    padding: 13px 14px 15px;
+  }
 
-    .card-info {
-        padding:
-            13px 14px 15px;
-    }
+  .card-info h3 {
+    font-size: 12px;
+  }
 
-    .card-info h3 {
-        font-size: 12px;
-    }
+  .add-card {
+    aspect-ratio: 1.35 / 1;
+  }
 
-    .add-card {
-        aspect-ratio:
-            1.35 / 1;
-    }
+  .add-card .plus {
+    font-size: 32px;
+  }
 
-    .add-card .plus {
-        font-size: 32px;
-    }
+  .add-card p {
+    font-size: 12px;
+  }
 
-    .add-card p {
-        font-size: 12px;
-    }
+  .modal {
+    padding: 12px;
+  }
 
-    .modal {
-        padding: 12px;
-    }
+  .modal-content {
+    max-height: 94vh;
 
-    .modal-content {
-        max-height: 94vh;
+    border-radius: 10px;
 
-        border-radius: 10px;
+    padding: 12px;
+  }
 
-        padding: 12px;
-    }
+  .modal-content > img {
+    max-height: 60vh;
+  }
 
-    .modal-content > img {
-        max-height: 60vh;
-    }
+  .detail-info {
+    padding: 18px 2px 2px;
+  }
 
-    .detail-info {
-        padding:
-            18px 2px 2px;
-    }
-
-    .delete-btn {
-        margin-top: 17px;
-    }
-
+  .delete-btn {
+    margin-top: 17px;
+  }
 }
-
 
 /* ==========================================
    SMALL MOBILE
@@ -1702,61 +1413,53 @@ body {
 ========================================== */
 
 @media (max-width: 450px) {
+  .navbar {
+    padding: 0 14px;
+  }
 
-    .navbar {
-        padding:
-            0 14px;
-    }
+  .nav-left,
+  .nav-right {
+    min-width: 80px;
+  }
 
-    .nav-left,
-    .nav-right {
-        min-width: 80px;
-    }
+  .site-name {
+    font-size: 12px;
+  }
 
-    .site-name {
-        font-size: 12px;
-    }
+  .star {
+    font-size: 26px;
+  }
 
-    .star {
-        font-size: 26px;
-    }
+  .certificate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 
-    .certificate-grid {
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
+    gap: 14px 10px;
+  }
 
-        gap:
-            14px 10px;
-    }
+  .certificate-card {
+    border-radius: 8px;
+  }
 
-    .certificate-card {
-        border-radius: 8px;
-    }
+  .certificate-card img {
+    aspect-ratio: 1.25 / 1;
+  }
 
-    .certificate-card img {
-        aspect-ratio:
-            1.25 / 1;
-    }
+  .card-info {
+    padding: 11px;
+  }
 
-    .card-info {
-        padding:
-            11px;
-    }
+  .card-info h3 {
+    font-size: 11px;
+  }
 
-    .card-info h3 {
-        font-size: 11px;
-    }
+  .login-box {
+    border-radius: 10px;
+  }
 
-    .login-box {
-        border-radius: 10px;
-    }
-
-    .add-container {
-        border-radius: 10px;
-    }
-
+  .add-container {
+    border-radius: 10px;
+  }
 }
-
 
 /* ==========================================
    VERY SMALL MOBILE
@@ -1764,33 +1467,26 @@ body {
 ========================================== */
 
 @media (max-width: 350px) {
+  .site-name {
+    font-size: 11px;
+  }
 
-    .site-name {
-        font-size: 11px;
-    }
+  .nav-login-btn,
+  .user-btn {
+    padding: 7px 9px;
 
-    .nav-login-btn,
-    .user-btn {
-        padding:
-            7px 9px;
+    font-size: 11px;
+  }
 
-        font-size: 11px;
-    }
+  .certificate-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .certificate-grid {
-        grid-template-columns:
-            1fr;
-    }
+  .certificate-card img {
+    aspect-ratio: 1.5 / 1;
+  }
 
-    .certificate-card img {
-        aspect-ratio:
-            1.5 / 1;
-    }
-
-    .add-card {
-        aspect-ratio:
-            1.5 / 1;
-    }
-
+  .add-card {
+    aspect-ratio: 1.5 / 1;
+  }
 }
-
