@@ -6,7 +6,7 @@ const STORAGE_KEY = "myCertificates";
 
 
 // ==========================================
-// Elements
+// ELEMENTS
 // ==========================================
 
 const certificateGrid =
@@ -50,7 +50,7 @@ const backBtn =
 
 
 // ==========================================
-// Load Data
+// LOAD DATA
 // ==========================================
 
 let certificates =
@@ -59,22 +59,19 @@ let certificates =
     ) || [];
 
 
-// เก็บ index ของ Certificate
-// ที่กำลังเปิดอยู่ใน Popup
+// Certificate ที่กำลังเปิดอยู่
 
 let selectedCertificateIndex = null;
 
 
 // ==========================================
-// Display Certificates
+// DISPLAY CERTIFICATES
 // ==========================================
 
 function displayCertificates() {
 
     certificateGrid.innerHTML = "";
 
-
-    // สร้าง Certificate Card
 
     certificates.forEach(
         (certificate, index) => {
@@ -105,8 +102,6 @@ function displayCertificates() {
             `;
 
 
-            // กด Card
-
             card.addEventListener(
                 "click",
                 () => {
@@ -124,7 +119,7 @@ function displayCertificates() {
 
 
     // ======================================
-    // Add Certificate Card
+    // ADD CARD
     // ======================================
 
     const addCard =
@@ -158,7 +153,7 @@ function displayCertificates() {
 
 
 // ==========================================
-// Open Detail
+// OPEN DETAIL
 // ==========================================
 
 function openDetail(index) {
@@ -166,8 +161,6 @@ function openDetail(index) {
     const certificate =
         certificates[index];
 
-
-    // จำว่าเปิด Certificate อันไหน
 
     selectedCertificateIndex =
         index;
@@ -192,7 +185,7 @@ function openDetail(index) {
 
 
 // ==========================================
-// Close Detail
+// CLOSE DETAIL
 // ==========================================
 
 function closeDetail() {
@@ -218,7 +211,7 @@ closeModal.addEventListener(
 
 
 // ==========================================
-// Click Outside Popup
+// CLICK OUTSIDE POPUP
 // ==========================================
 
 detailModal.addEventListener(
@@ -245,7 +238,6 @@ deleteBtn.addEventListener(
     "click",
     () => {
 
-        // ป้องกันกรณีไม่มี Certificate
         if (
             selectedCertificateIndex === null
         ) {
@@ -259,8 +251,6 @@ deleteBtn.addEventListener(
             ];
 
 
-        // ยืนยันก่อนลบ
-
         const confirmDelete =
             confirm(
                 `ต้องการลบ "${certificate.title}" หรือไม่?`
@@ -272,7 +262,7 @@ deleteBtn.addEventListener(
         }
 
 
-        // ลบข้อมูล
+        // ลบ Certificate
 
         certificates.splice(
             selectedCertificateIndex,
@@ -280,11 +270,13 @@ deleteBtn.addEventListener(
         );
 
 
-        // บันทึกกลับ LocalStorage
+        // Save ใหม่
 
         localStorage.setItem(
             STORAGE_KEY,
-            JSON.stringify(certificates)
+            JSON.stringify(
+                certificates
+            )
         );
 
 
@@ -293,7 +285,7 @@ deleteBtn.addEventListener(
         closeDetail();
 
 
-        // แสดงข้อมูลใหม่
+        // Refresh Grid
 
         displayCertificates();
 
@@ -302,7 +294,7 @@ deleteBtn.addEventListener(
 
 
 // ==========================================
-// Open Add Page
+// OPEN ADD PAGE
 // ==========================================
 
 function openAddPage() {
@@ -325,7 +317,7 @@ function openAddPage() {
 
 
 // ==========================================
-// Close Add Page
+// CLOSE ADD PAGE
 // ==========================================
 
 function closeAddPage() {
@@ -373,7 +365,7 @@ homeBtn.addEventListener(
 
 
 // ==========================================
-// Image Preview
+// IMAGE PREVIEW
 // ==========================================
 
 certificateImage.addEventListener(
@@ -389,7 +381,7 @@ certificateImage.addEventListener(
         }
 
 
-        // ตรวจว่าเป็นรูป
+        // ตรวจสอบว่าเป็นรูป
 
         if (
             !file.type.startsWith(
@@ -435,7 +427,7 @@ certificateImage.addEventListener(
 
 
 // ==========================================
-// Save Certificate
+// SAVE CERTIFICATE
 // ==========================================
 
 certificateForm.addEventListener(
@@ -465,8 +457,6 @@ certificateForm.addEventListener(
         }
 
 
-        // อ่านรูป
-
         const reader =
             new FileReader();
 
@@ -474,12 +464,12 @@ certificateForm.addEventListener(
         reader.onload =
             function (event) {
 
-
                 const newCertificate = {
 
                     id: Date.now(),
 
-                    title: title,
+                    title:
+                        title,
 
                     image:
                         event.target.result
@@ -509,7 +499,7 @@ certificateForm.addEventListener(
                 );
 
 
-                // อัปเดตหน้า
+                // Refresh
 
                 displayCertificates();
 
@@ -528,7 +518,7 @@ certificateForm.addEventListener(
 
 
 // ==========================================
-// Escape HTML
+// ESCAPE HTML
 // ==========================================
 
 function escapeHTML(text) {
@@ -546,7 +536,7 @@ function escapeHTML(text) {
 
 
 // ==========================================
-// Start
+// START
 // ==========================================
 
 displayCertificates();
