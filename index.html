@@ -1,237 +1,446 @@
-
 <!DOCTYPE html>
 <html lang="th">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>My Certificates</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================== -->
 
-    <nav class="navbar">
+    <!-- =====================================
+         MAIN WEBSITE
+    ====================================== -->
 
-        <div class="nav-left">
-            <span>My Certificates</span>
-        </div>
-
-        <!-- ดาวตรงกลาง -->
-        <div class="star">
-            ✦
-        </div>
-
-        <div class="nav-right">
-            <button id="homeBtn">
-                Home
-            </button>
-        </div>
-
-    </nav>
+    <div id="mainPage">
 
 
-    <!-- =========================
-         HOME PAGE
-    ========================== -->
+        <!-- =================================
+             NAVBAR
+        ================================== -->
 
-    <main class="container">
+        <nav class="navbar">
 
-        <div class="page-title">
+            <!-- LEFT -->
 
-            <h1>
-                My Certificates
-            </h1>
+            <div class="nav-left">
 
-            <p>
-                รวมใบประกาศนียบัตรของฉัน
-            </p>
+                <span class="site-name">
+                    My Certificates
+                </span>
 
-        </div>
+            </div>
 
 
-        <!-- Certificate Grid -->
+            <!-- CENTER STAR -->
 
-        <div
-            id="certificateGrid"
-            class="certificate-grid">
-        </div>
-
-    </main>
+            <div class="star">
+                ✦
+            </div>
 
 
-    <!-- =========================
-         CERTIFICATE DETAIL POPUP
-    ========================== -->
+            <!-- RIGHT -->
 
-    <div
-        id="detailModal"
-        class="modal">
+            <div class="nav-right">
 
-        <div class="modal-content">
-
-            <button
-                id="closeModal"
-                class="close-btn">
-
-                ×
-
-            </button>
-
-
-            <!-- Certificate Image -->
-
-            <img
-                id="detailImage"
-                src=""
-                alt="Certificate">
-
-
-            <!-- Certificate Info -->
-
-            <div class="detail-info">
-
-                <h2 id="detailTitle"></h2>
-
-
-                <!-- Delete -->
+                <!-- ยังไม่ได้ Login -->
 
                 <button
-                    id="deleteBtn"
-                    class="delete-btn">
-
-                    🗑 ลบ Certificate
-
+                    id="loginNavBtn"
+                    class="nav-login-btn"
+                >
+                    Login
                 </button>
+
+
+                <!-- Login แล้ว -->
+
+                <div
+                    id="userArea"
+                    class="user-area"
+                >
+
+                    <button
+                        id="userBtn"
+                        class="user-btn"
+                    >
+                        love
+                    </button>
+
+
+                    <div
+                        id="userMenu"
+                        class="user-menu"
+                    >
+
+                        <div class="user-info">
+
+                            <span>
+                                Logged in as
+                            </span>
+
+                            <strong id="menuUsername">
+                                love
+                            </strong>
+
+                        </div>
+
+
+                        <button id="logoutBtn">
+                            Logout
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+
+
+        <!-- =================================
+             CERTIFICATE CONTENT
+        ================================== -->
+
+        <main class="container">
+
+
+            <div class="page-title">
+
+                <h1>
+                    My Certificates
+                </h1>
+
+                <p>
+                    รวมใบประกาศนียบัตรของฉัน
+                </p>
+
+            </div>
+
+
+            <!-- Certificate Grid -->
+
+            <div
+                id="certificateGrid"
+                class="certificate-grid"
+            ></div>
+
+
+        </main>
+
+
+
+        <!-- =================================
+             CERTIFICATE DETAIL MODAL
+        ================================== -->
+
+        <div
+            id="detailModal"
+            class="modal"
+        >
+
+            <div class="modal-content">
+
+
+                <button
+                    id="closeModal"
+                    class="close-btn"
+                >
+                    ×
+                </button>
+
+
+                <img
+                    id="detailImage"
+                    src=""
+                    alt="Certificate"
+                >
+
+
+                <div class="detail-info">
+
+                    <h2 id="detailTitle">
+                    </h2>
+
+
+                    <!-- ปุ่มลบ -->
+
+                    <button
+                        id="deleteBtn"
+                        class="delete-btn"
+                    >
+                        🗑 ลบ Certificate
+                    </button>
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
 
-    <!-- =========================
-         ADD CERTIFICATE PAGE
-    ========================== -->
+        <!-- =================================
+             LOGIN MODAL
+        ================================== -->
 
-    <section
-        id="addPage"
-        class="add-page">
+        <div
+            id="loginModal"
+            class="modal login-modal"
+        >
 
-        <div class="add-container">
+            <div class="login-box">
 
-
-            <!-- Back -->
-
-            <button
-                id="backBtn"
-                class="back-btn">
-
-                ← กลับ
-
-            </button>
-
-
-            <h1>
-                เพิ่ม Certificate
-            </h1>
-
-            <p class="add-subtitle">
-                เพิ่มใบประกาศนียบัตรของคุณ
-            </p>
-
-
-            <form id="certificateForm">
-
-
-                <!-- Upload Image -->
-
-                <div class="form-group">
-
-                    <label>
-                        รูป Certificate
-                    </label>
-
-
-                    <label
-                        for="certificateImage"
-                        class="upload-box">
-
-
-                        <div id="uploadText">
-
-                            <span class="upload-icon">
-                                ＋
-                            </span>
-
-                            <span>
-                                คลิกเพื่อเลือกรูป
-                            </span>
-
-                        </div>
-
-
-                        <img
-                            id="imagePreview"
-                            src=""
-                            alt="Preview">
-
-                    </label>
-
-
-                    <input
-                        type="file"
-                        id="certificateImage"
-                        accept="image/*"
-                        hidden
-                        required>
-
-                </div>
-
-
-                <!-- Certificate Name -->
-
-                <div class="form-group">
-
-                    <label
-                        for="certificateTitle">
-
-                        ชื่อ Certificate
-
-                    </label>
-
-
-                    <input
-                        type="text"
-                        id="certificateTitle"
-                        placeholder="เช่น Certificate of Web Development"
-                        required>
-
-                </div>
-
-
-                <!-- Save -->
 
                 <button
-                    type="submit"
-                    class="save-btn">
-
-                    บันทึก Certificate
-
+                    id="closeLoginModal"
+                    class="close-btn"
+                >
+                    ×
                 </button>
 
-            </form>
+
+                <div class="login-star">
+                    ✦
+                </div>
+
+
+                <h1>
+                    Login
+                </h1>
+
+
+                <p>
+                    Login เพื่อจัดการ Certificate
+                </p>
+
+
+                <form id="loginForm">
+
+
+                    <div class="login-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            placeholder="Username"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="login-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <p
+                        id="loginError"
+                        class="login-error"
+                    ></p>
+
+
+                    <button
+                        type="submit"
+                        class="login-btn"
+                    >
+                        Login
+                    </button>
+
+                </form>
+
+            </div>
 
         </div>
 
-    </section>
+
+
+        <!-- =================================
+             LOADING
+        ================================== -->
+
+        <div
+            id="loadingPage"
+            class="loading-page"
+        >
+
+            <div class="loading-box">
+
+                <div class="loading-star">
+                    ✦
+                </div>
+
+
+                <div class="spinner">
+                </div>
+
+
+                <h2>
+                    Welcome back
+                </h2>
+
+
+                <p>
+                    กำลังโหลด...
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             ADD CERTIFICATE PAGE
+        ================================== -->
+
+        <section
+            id="addPage"
+            class="add-page"
+        >
+
+            <div class="add-container">
+
+
+                <button
+                    id="backBtn"
+                    class="back-btn"
+                >
+                    ← กลับ
+                </button>
+
+
+                <h1>
+                    เพิ่ม Certificate
+                </h1>
+
+
+                <p class="add-subtitle">
+                    เพิ่มใบประกาศนียบัตรของคุณ
+                </p>
+
+
+                <form id="certificateForm">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            รูป Certificate
+                        </label>
+
+
+                        <label
+                            for="certificateImage"
+                            class="upload-box"
+                        >
+
+                            <div id="uploadText">
+
+                                <span class="upload-icon">
+                                    ＋
+                                </span>
+
+                                <span>
+                                    คลิกเพื่อเลือกรูป
+                                </span>
+
+                            </div>
+
+
+                            <img
+                                id="imagePreview"
+                                src=""
+                                alt="Preview"
+                            >
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="certificateImage"
+                            accept="image/*"
+                            hidden
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group">
+
+                        <label for="certificateTitle">
+                            ชื่อ Certificate
+                        </label>
+
+
+                        <input
+                            type="text"
+                            id="certificateTitle"
+                            placeholder="เช่น Certificate of Web Development"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        บันทึก Certificate
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
 
 
     <script src="script.js"></script>
@@ -239,4 +448,3 @@
 </body>
 
 </html>
-
